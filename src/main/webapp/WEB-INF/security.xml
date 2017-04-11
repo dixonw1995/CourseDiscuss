@@ -5,38 +5,49 @@
          xmlns:tx="http://www.springframework.org/schema/tx"
          xmlns:jpa="http://www.springframework.org/schema/data/jpa"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 
          xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
                              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                              http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
                              http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                             http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 ">
     <context:annotation-config />
 
     <b:bean id="dataSource" 
             class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <b:property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
-        <b:property name="url" value="jdbc:derby://localhost:1527/custsupport" />
+        <b:property name="url" value="jdbc:derby://localhost:1527/forum" />
         <b:property name="username" value="nbuser" />
         <b:property name="password" value="nbuser" />
     </b:bean> 
+    
+    <jdbc:embedded-database id="dataSource" type="DERBY">
+        <jdbc:script location="classpath:create_users.sql" />
+        <jdbc:script location="classpath:create_threads.sql" />
+        <jdbc:script location="classpath:create_polls.sql" />
+    </jdbc:embedded-database>
 
-    <b:bean id="ticketUserService" class="edu.ouhk.comps380f.dao.TicketUserService" />
+    <b:bean id="userService" class="edu.ouhk.comps380f.service.UserService" />
 
     <b:bean id="bCryptPasswordEncoder"
-        class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+            class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     
     <authentication-manager>
-        <authentication-provider user-service-ref="ticketUserService">
+        <authentication-provider user-service-ref="userService">
             <password-encoder ref="bCryptPasswordEncoder" />
         </authentication-provider>
     </authentication-manager>
     
     <http auto-config="true">
         <intercept-url pattern="/user/**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/ticket/delete/**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/ticket/**" access="hasAnyRole('USER','ADMIN')" />
+        <intercept-url pattern="/forum/delete/**" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/forum/category/*/post" access="hasAnyRole('ADMIN', 'USER') and !hasRole('BANNED')" />
+        <intercept-url pattern="/forum/thread/*/reply" access="hasAnyRole('ADMIN', 'USER') and !hasRole('BANNED')" />
+        <intercept-url pattern="/login" access="hasRole('ANONYMOUS')" />
+        <intercept-url pattern="/register" access="hasRole('ANONYMOUS')" />
         <form-login login-page="/login"
                     authentication-failure-url="/login?error" />
         <logout logout-success-url="/login?logout"
@@ -48,12 +59,12 @@
     
     <!-- Create default configuration for Hibernate -->
     <b:bean id="hibernateJpaVendorAdapter" 
-          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+            class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
 
     <!-- Configure the entity manager factory bean -->
     <b:bean id="entityManagerFactory" 
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <b:property name="dataSource" ref="dataSource"/>
+            class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <b:property name="dataSource" ref="dataSource" />
         <b:property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
         <!-- Set JPA properties -->
         <b:property name="jpaProperties">
@@ -68,7 +79,7 @@
 
     <!-- Configure the transaction manager bean -->
     <b:bean id="transactionManager" 
-          class="org.springframework.orm.jpa.JpaTransactionManager">
+            class="org.springframework.orm.jpa.JpaTransactionManager">
         <b:property name="entityManagerFactory" ref="entityManagerFactory"/>
     </b:bean>
 

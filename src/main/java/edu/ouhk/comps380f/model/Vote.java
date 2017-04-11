@@ -1,6 +1,5 @@
 package edu.ouhk.comps380f.model;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,40 +7,50 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "user_roles")
-public class UserRole implements Serializable {
+public class Vote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_role_id")
-    private int id;
+    private long id;
+
+    @Column(name = "response_id", insertable = false, updatable = false)
+    private long responseId;
 
     @Column(insertable = false, updatable = false)
     private String username;
 
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "response_id")
+    private Response response;
 
     @ManyToOne
     @JoinColumn(name = "username")
     private User user;
 
-    public UserRole() {
+    public Vote() {
     }
 
-    public UserRole(User user, String role) {
+    public Vote(Response response, User user) {
+        this.response = response;
         this.user = user;
-        this.role = role;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public long getResponseId() {
+        return responseId;
+    }
+
+    public void setResponseId(long responseId) {
+        this.responseId = responseId;
     }
 
     public String getUsername() {
@@ -52,12 +61,12 @@ public class UserRole implements Serializable {
         this.username = username;
     }
 
-    public String getRole() {
-        return role;
+    public Response getResponse() {
+        return response;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setResponse(Response response) {
+        this.response = response;
     }
 
     public User getUser() {
@@ -67,4 +76,5 @@ public class UserRole implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

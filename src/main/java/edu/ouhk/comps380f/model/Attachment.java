@@ -30,12 +30,22 @@ public class Attachment implements Serializable {
     @Lob
     private byte[] contents;
 
-    @Column(name = "ticket_id", insertable = false, updatable = false)
-    private long ticketId;
+    @Column(name = "post_id", insertable = false, updatable = false)
+    private long postId;
 
     @ManyToOne
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    public Attachment() {
+    }
+
+    public Attachment(String name, String mimeContentType, byte[] contents, Post post) {
+        this.name = name;
+        this.mimeContentType = mimeContentType;
+        this.contents = contents;
+        this.post = post;
+    }
 
     public long getId() {
         return id;
@@ -69,19 +79,19 @@ public class Attachment implements Serializable {
         this.contents = contents;
     }
 
-    public long getTicketId() {
-        return ticketId;
+    public long getPostId() {
+        return postId;
     }
 
-    public void setTicketId(long ticketId) {
-        this.ticketId = ticketId;
+    public void setPostId(long postId) {
+        this.postId = postId;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public Post getPost() {
+        return post;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void setPost(Post post) {
+        this.post = post;
     }
 }
