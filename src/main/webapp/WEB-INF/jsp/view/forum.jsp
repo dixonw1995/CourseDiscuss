@@ -41,12 +41,12 @@
                 <form:form method="POST" action="${vote_url}"
                            enctype="multipart/form-data" modelAttribute="vote">
                     <c:forEach items="${poll.responses}" var="response">
-                        <security:authorize access="!hasRole('ANONYMOUS')">
+                        <security:authorize access="hasAnyRole('ADMIN', 'USER')">
                             <form:radiobutton path="responseId" value="${response.id}" />
                         </security:authorize>
                         <form:label path="responseId"><c:out value="${response.content} (${fn:length(response.votes)})" /></form:label><br/>
                     </c:forEach>
-                    <security:authorize access="!hasRole('ANONYMOUS')">
+                    <security:authorize access="hasAnyRole('ADMIN', 'USER')">
                         <input type="submit" value="Vote"/>
                     </security:authorize>
                 </form:form>
