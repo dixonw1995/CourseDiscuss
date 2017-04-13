@@ -2,7 +2,6 @@ package com.jedd.model;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -98,9 +97,9 @@ public class User implements Serializable {
         role.setUser(null);
         this.roles.remove(role);
     }
-    
+
     public void removeRoles() {
-        for(UserRole role: this.roles) {
+        for (UserRole role : this.roles) {
             role.setUser(null);
         }
         roles.clear();
@@ -121,7 +120,7 @@ public class User implements Serializable {
     public void deleteVote(Vote vote) {
         this.votes.remove(vote);
     }
-    
+
     @Override
     public String toString() {
         return String.format("user#%s posts(%d) votes(%d)", username, posts.size(), votes.size());

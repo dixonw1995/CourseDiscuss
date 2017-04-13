@@ -17,7 +17,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.jedd.dao.UserRepository;
 import com.jedd.exception.UserNotFound;
 import com.jedd.exception.UsernameExists;
-import com.jedd.model.User;
 import com.jedd.service.UserService;
 
 @Controller
@@ -28,7 +27,7 @@ public class UserController {
 
     @Resource
     UserRepository UserRepo;
-    
+
     @Autowired
     UserService userService;
 
@@ -41,8 +40,9 @@ public class UserController {
         model.addAttribute("users", userService.getUsers());
         return "userList";
     }
-    
+
     public static class Form {
+
         String username;
         String password;
         String[] roles;
@@ -70,7 +70,7 @@ public class UserController {
         public void setRoles(String[] roles) {
             this.roles = roles;
         }
-        
+
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)

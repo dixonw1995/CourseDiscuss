@@ -2,7 +2,6 @@ package com.jedd.model;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -119,7 +118,7 @@ public class Post implements Serializable {
     }
 
     public void deleteAttachments() {
-        for(Attachment attachment: this.attachments) {
+        for (Attachment attachment : this.attachments) {
             attachment.setPost(null);
         }
         this.attachments.clear();
@@ -133,7 +132,6 @@ public class Post implements Serializable {
 //        this.thread.deletePost(this);
 //        this.thread = null;
 //    }
-    
     @Override
     public String toString() {
         return String.format("post#%d[%s](%d attachments)-%s",

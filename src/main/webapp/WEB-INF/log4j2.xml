@@ -34,7 +34,7 @@
         <Logger name="com.jedd.controller" level="info" additivity="false">
             <AppenderRef ref="App-File-Appender"/>
             <AppenderRef ref="Console-Appender"/>
-         </Logger>
+        </Logger>
         <Root>
             <AppenderRef ref="Console-Appender"/>
         </Root>

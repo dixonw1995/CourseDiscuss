@@ -1,6 +1,5 @@
 package com.jedd.controller;
 
-import com.jedd.exception.EmptyThread;
 import com.jedd.exception.PollNotFound;
 import com.jedd.exception.ResponseNotFound;
 import com.jedd.exception.UserNotFound;
@@ -79,7 +78,7 @@ public class PollController {
         public void setResponses(String[] responses) {
             this.responses = responses;
         }
-        
+
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
@@ -158,7 +157,6 @@ public class PollController {
 //        String result = vote(form.getResponseId(), principal.getName());
 //        return new RedirectView("/category/" + category + result, true);
 //    }
-
 }
 
 class VoteForm {

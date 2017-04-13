@@ -17,7 +17,6 @@ import com.jedd.exception.EmptyThread;
 import com.jedd.exception.UserNotFound;
 import com.jedd.model.Attachment;
 import com.jedd.model.User;
-import javax.persistence.FetchType;
 
 @Service
 public class PostService {

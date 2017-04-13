@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PollService {
-    
+
     private static Random random = new Random();
 
     @Resource
@@ -65,11 +65,13 @@ public class PollService {
 
     @Transactional(rollbackFor = PollNotFound.class)
     public Poll getPoll() throws PollNotFound {
-        if (pollRepo.count() == 0) throw new PollNotFound();
+        if (pollRepo.count() == 0) {
+            throw new PollNotFound();
+        }
         List<Poll> polls = getPolls();
         return polls.get(random.nextInt(polls.size()));
     }
-    
+
     @Transactional
     public long countPolls() {
         return pollRepo.count();
@@ -113,19 +115,20 @@ public class PollService {
         poll.deleteResponse(deletedResponse);
         pollRepo.save(poll);
     }
-    
+
     @Transactional
     public boolean hasVoted(long responseId, String username) {
         return hasVoted(
                 responseRepo.findOne(responseId).getPoll(), username);
     }
-    
+
     @Transactional
     public boolean hasVoted(Poll poll, String username) {
-        for(Response response: poll.getResponses()) {
+        for (Response response : poll.getResponses()) {
             if (voteRepo.existsByResponseIdAndUsername(
-                    response.getId(), username))
+                    response.getId(), username)) {
                 return true;
+            }
         }
         return false;
     }

@@ -26,3 +26,23 @@ INSERT INTO user_roles(username, role) VALUES ('quinn', 'ROLE_BANNED');
 INSERT INTO users VALUES ('penguin', '$2a$10$kjRan.eohKegpn7Rln4tgeNVPCEl.Gl/L0vsh7euXtV1x9kvYU3pO');
 INSERT INTO user_roles(username, role) VALUES ('penguin', 'ROLE_BANNED');
 INSERT INTO user_roles(username, role) VALUES ('penguin', 'ROLE_USER');
+
+
+INSERT INTO poll(question) VALUES ('Which one is your favourite character?');
+INSERT INTO response(poll_id, content) VALUES (1, 'joker');
+INSERT INTO response(poll_id, content) VALUES (1, 'batman');
+INSERT INTO response(poll_id, content) VALUES (1, 'quinn');
+INSERT INTO response(poll_id, content) VALUES (1, 'penguin');
+
+INSERT INTO poll(question) VALUES ('How would you reply a "hi" message?');
+INSERT INTO response(poll_id, content) VALUES (2, 'hi back');
+INSERT INTO response(poll_id, content) VALUES (2, 'start some topic');
+INSERT INTO response(poll_id, content) VALUES (2, 'ignore it');
+INSERT INTO response(poll_id, content) VALUES (2, 'delete that guy from contact');
+
+INSERT INTO poll(question) VALUES ('What is the most important?');
+INSERT INTO response(poll_id, content) VALUES (3, 'earn money');
+INSERT INTO response(poll_id, content) VALUES (3, 'study to earn money');
+INSERT INTO response(poll_id, content) VALUES (3, 'take money from parent');
+INSERT INTO response(poll_id, content) VALUES (3, 'money');
+

@@ -109,8 +109,9 @@ public class UserService implements UserDetailsService {
         User user = userRepo.findOne(username);
         user.setPassword(passwordEncoder.encode(password));
         user.removeRoles();
-        for (String role : roles)
+        for (String role : roles) {
             user.addRole(role);
+        }
         com.jedd.model.User savedUser = userRepo.save(user);
         return savedUser.getUsername();
     }

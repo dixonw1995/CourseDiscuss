@@ -75,23 +75,27 @@ public class Thread implements Serializable {
     public void deletePost(Post post) {
         post.setThread(null);
         this.posts.remove(post);
-        if (post.getUser() == null) return;
+        if (post.getUser() == null) {
+            return;
+        }
         post.getUser().deletePost(post);
         post.setUser(null);
     }
 
     public void deletePosts() {
-        for(Post post: this.posts) {
+        for (Post post : this.posts) {
             post.setThread(null);
         }
         this.posts.clear();
     }
-    
+
     public boolean isTopic(Post post) {
-        if (posts == null || posts.isEmpty()) return false;
+        if (posts == null || posts.isEmpty()) {
+            return false;
+        }
         return this.posts.iterator().next() == post;
     }
-    
+
     @Override
     public String toString() {
         return String.format("%s thread#%d[%s]", category, id, title);

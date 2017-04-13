@@ -108,8 +108,8 @@ public class ForumController {
             method = RequestMethod.GET)
     public ModelAndView create(@PathVariable("category") String category) {
         logger.info(String.format("posting new %s thread", category));
-        ModelAndView mav =
-                new ModelAndView("post", "thread", new TopicForm());
+        ModelAndView mav
+                = new ModelAndView("post", "thread", new TopicForm());
         mav.addObject("category", category);
         return mav;
     }
@@ -141,8 +141,8 @@ public class ForumController {
         }
         logger.info("browsing " + thread);
         logger.info(thread.getPosts().toString());
-        ModelAndView mav =
-                new ModelAndView("thread", "reply", new PostForm());
+        ModelAndView mav
+                = new ModelAndView("thread", "reply", new PostForm());
         mav.addObject("thread", thread);
         return mav;
     }
@@ -197,7 +197,7 @@ public class ForumController {
         }
         return new RedirectView("/forum/thread/" + threadId, true);
     }
-    
+
 //    private String vote(long responseId, String username) {
 //        logger.info(username + " is voting response#" + responseId);
 //        try {
@@ -228,5 +228,4 @@ public class ForumController {
 //        String result = vote(form.getResponseId(), principal.getName());
 //        return new RedirectView("/category/" + category + result, true);
 //    }
-
 }
