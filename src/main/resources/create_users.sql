@@ -24,3 +24,19 @@ INSERT INTO user_roles(username, role) VALUES ('maria', 'ROLE_USER');
 
 INSERT INTO users VALUES ('oliver', '$2a$10$G.tp7.mgJQ6jHQTfLy3SlOt5wnLd3GSphcsrGAJi2DcZVLPhszixO');
 INSERT INTO user_roles(username, role) VALUES ('oliver', 'ROLE_USER');
+
+INSERT INTO users VALUES ('joker', '$2a$10$BdL/t6iMFyoYpSXaM8oPIedXzCLnIsPJpJQ5SGMtYCk1AaWdBVn1i');
+INSERT INTO user_roles(username, role) VALUES ('joker', 'ROLE_BANNED');
+INSERT INTO user_roles(username, role) VALUES ('joker', 'ROLE_ADMIN');
+
+INSERT INTO users VALUES ('batman', '$2a$10$BdL/t6iMFyoYpSXaM8oPIedXzCLnIsPJpJQ5SGMtYCk1AaWdBVn1i');
+INSERT INTO user_roles(username, role) VALUES ('batman', 'ROLE_BANNED');
+INSERT INTO user_roles(username, role) VALUES ('batman', 'ROLE_ADMIN');
+INSERT INTO user_roles(username, role) VALUES ('batman', 'ROLE_USER');
+
+INSERT INTO users VALUES ('quinn', '$2a$10$oB/efKFVOW.3piofh/uDguxVcFOmR0i2U7LR/9jOwyoJjTw2piw6C');
+INSERT INTO user_roles(username, role) VALUES ('quinn', 'ROLE_BANNED');
+
+INSERT INTO users VALUES ('penguin', '$2a$10$kjRan.eohKegpn7Rln4tgeNVPCEl.Gl/L0vsh7euXtV1x9kvYU3pO');
+INSERT INTO user_roles(username, role) VALUES ('penguin', 'ROLE_BANNED');
+INSERT INTO user_roles(username, role) VALUES ('penguin', 'ROLE_USER');
