@@ -48,6 +48,7 @@
         <jdbc:script location="classpath:create_users.sql" />
         <jdbc:script location="classpath:create_threads.sql" />
         <jdbc:script location="classpath:create_polls.sql" />
+        <jdbc:script location="classpath:11181021-WongTikSan-0030.sql" />
     </jdbc:embedded-database>
 
     <b:bean id="userService" class="com.jedd.service.UserService" />
