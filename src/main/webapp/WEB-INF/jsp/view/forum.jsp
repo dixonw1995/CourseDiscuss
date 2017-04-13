@@ -28,6 +28,30 @@
                 [<a href="<c:url value="/forum/category/${category}/post" />">Post new thread</a>]<br /><br />
             </security:authorize>
         </c:if>
-        <div><h4>Poll</h4></div>
+        <br/>
+
+        <h4>Poll</h4>
+        <c:choose>
+            <c:when test="${empty poll}">
+                <i>There are no polls now.</i>
+            </c:when>
+            <c:otherwise>
+                Poll#<c:out value="${poll.id}" />. <c:out value="${poll.question}"  />
+                <c:url var="vote_url" value='/poll/vote' />
+                <form:form method="POST" action="${vote_url}"
+                           enctype="multipart/form-data" modelAttribute="vote">
+                    <c:forEach items="${poll.responses}" var="response">
+                        <security:authorize access="!hasRole('ANONYMOUS')">
+                            <form:radiobutton path="responseId" value="${response.id}" />
+                        </security:authorize>
+                        <form:label path="responseId"><c:out value="${response.content} (${fn:length(response.votes)})" /></form:label><br/>
+                    </c:forEach>
+                    <security:authorize access="!hasRole('ANONYMOUS')">
+                        <input type="submit" value="Vote"/>
+                    </security:authorize>
+                </form:form>
+            </c:otherwise>
+        </c:choose><br/><br/>
+        [<a href="<c:url value="/poll" />">View all polls</a>]
     </body>
 </html>

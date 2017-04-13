@@ -6,6 +6,7 @@
          xmlns:jpa="http://www.springframework.org/schema/data/jpa"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+         xmlns:p="http://www.springframework.org/schema/p"
 
          xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
@@ -15,7 +16,26 @@
                              http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 ">
     <context:annotation-config />
-
+    
+    <http auto-config="true">
+        <intercept-url pattern="/user/**" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/forum/delete/**" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/forum/category/*/post" access="hasAnyRole('ADMIN', 'USER') and !hasRole('BANNED')" />
+        <intercept-url pattern="/forum/thread/*/reply" access="hasAnyRole('ADMIN', 'USER') and !hasRole('BANNED')" />
+        <intercept-url pattern="/poll/vote" access="hasAnyRole('ADMIN', 'USER')" />
+        <intercept-url pattern="/poll/create" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/poll/delete" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/login" access="hasRole('ANONYMOUS')" />
+        <intercept-url pattern="/register" access="hasRole('ANONYMOUS')" />
+        <form-login login-page="/login"
+                    authentication-failure-url="/login?error" />
+        <logout logout-success-url="/login?logout"
+                invalidate-session="true"
+                delete-cookies="JSESSIONID" />
+        <remember-me key="forumRememberMe"
+                     token-validity-seconds="86400" />
+    </http>
+    
     <b:bean id="dataSource" 
             class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <b:property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
@@ -30,7 +50,7 @@
         <jdbc:script location="classpath:create_polls.sql" />
     </jdbc:embedded-database>
 
-    <b:bean id="userService" class="edu.ouhk.comps380f.service.UserService" />
+    <b:bean id="userService" class="com.jedd.service.UserService" />
 
     <b:bean id="bCryptPasswordEncoder"
             class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
@@ -40,22 +60,6 @@
             <password-encoder ref="bCryptPasswordEncoder" />
         </authentication-provider>
     </authentication-manager>
-    
-    <http auto-config="true">
-        <intercept-url pattern="/user/**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/forum/delete/**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/forum/category/*/post" access="hasAnyRole('ADMIN', 'USER') and !hasRole('BANNED')" />
-        <intercept-url pattern="/forum/thread/*/reply" access="hasAnyRole('ADMIN', 'USER') and !hasRole('BANNED')" />
-        <intercept-url pattern="/login" access="hasRole('ANONYMOUS')" />
-        <intercept-url pattern="/register" access="hasRole('ANONYMOUS')" />
-        <form-login login-page="/login"
-                    authentication-failure-url="/login?error" />
-        <logout logout-success-url="/login?logout"
-                invalidate-session="true"
-                delete-cookies="JSESSIONID" />
-        <remember-me key="custSupportSecret"
-                     token-validity-seconds="86400" />
-    </http>
     
     <!-- Create default configuration for Hibernate -->
     <b:bean id="hibernateJpaVendorAdapter" 
@@ -74,7 +78,7 @@
             </b:props>
         </b:property>
         <!-- Set base package of your entities -->
-        <b:property name="packagesToScan" value="edu.ouhk.comps380f.model"/>
+        <b:property name="packagesToScan" value="com.jedd.model"/>
     </b:bean>
 
     <!-- Configure the transaction manager bean -->
@@ -90,6 +94,6 @@
       Configure Spring Data JPA and set the base package of the 
       repository interfaces 
     -->
-    <jpa:repositories base-package="edu.ouhk.comps380f.dao"/>
+    <jpa:repositories base-package="com.jedd.dao"/>
         
 </b:beans>

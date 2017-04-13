@@ -31,7 +31,7 @@
             <AppenderRef ref="Spring-File-Appender"/>
             <AppenderRef ref="Console-Appender"/>
         </Logger>
-        <Logger name="edu.ouhk.comps380f.controller" level="info" additivity="false">
+        <Logger name="com.jedd.controller" level="info" additivity="false">
             <AppenderRef ref="App-File-Appender"/>
             <AppenderRef ref="Console-Appender"/>
          </Logger>
